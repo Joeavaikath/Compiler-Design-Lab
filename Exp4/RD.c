@@ -35,6 +35,16 @@ int S(){
 			pos++;
 			return true;
 		}
+		else{
+			pos--;
+			if(B())
+				return true;
+		}
+	}
+	else if(B()){
+
+		printf("here");
+		return true;
 	}
 	else{
 		printf("S -> AB\n");
@@ -69,8 +79,7 @@ int B(){
 		printf("B -> b\n");
 		return true;
 	}
-	else{
-		if(ip[pos] == 'c'){
+	else if(ip[pos] == 'c'){
 			printf("B -> cAd\n");
 			pos++;
 			if(A()){
@@ -83,5 +92,7 @@ int B(){
 				}
 			}
 		}
-	}
+	else
+		return false;
 }
+
