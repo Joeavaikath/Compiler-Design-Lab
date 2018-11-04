@@ -12,7 +12,7 @@ char ip[10];
 char curIp;
 
 //Transition Table 
-char table[6][7][4] = { "NT","id","+","*","(",")","$",
+char table[6][7][4] = { "NT","i","+","*","(",")","$",
 			 "E" ,"TX","-","-","TX","-","-",
 			 "X","-","+TX","-","-","#","#",
 			 "T","FY","-","-","FY","-","-",
@@ -35,6 +35,7 @@ char pop(){
 
 }
 
+//Get row index value from table
 int getRow(char c){
 
 	for(int i=0;i<rCount;i++){
@@ -45,18 +46,20 @@ int getRow(char c){
 
 }
 
+//Get column index value from the table
 int getCol(char c){
 
 	for(int i=0;i<cCount;i++){
 		
-		if(table[0][i] == c)
+		if(table[0][i][0] == c)
 			return i;
 	}
 }
 
+//Push multi-character rules in reverse
 void revPush(char c[]){
 
-	for(int i=strlen(c)-1;i>0;i--)
+	for(int i=strlen(c)-1;i>=0;i--)
 		push(c[i]);
 }
 
@@ -64,10 +67,9 @@ void revPush(char c[]){
 void main(){
 
 	//Initialize stack
-	push("$");
-	push("E");
-	printf("\ncheck1");
-
+	push('$');
+	push('E');
+	
 	//Accept Input
 	printf("\n Enter the i/p string : ");
 	scanf("%s", ip);
@@ -78,27 +80,52 @@ void main(){
 		cur = pop();
 		
 		curIp = ip[ipInd];
-		
-		if((cur >= 'a' && cur <= 'z') ||
-		  !(cur >= 'A' && cur <= 'Z') ||
-			cur != '$' ){
 
-			if(cur == curIp)
+		printf("\n\nStack symbol:%c \n\nCurrent I/P Symbol:%c", cur, curIp);
+
+		//Terminal matching
+		if((cur >= 'a' && cur <= 'z') ||
+		    cur == '(' ||
+ 		    cur == ')' ||
+		    cur == '+' ||
+		    cur == '*' ||
+		    cur == '/' ||
+		    cur == '-' ){
+
+			
+			if(cur == curIp){
+				printf("\n\nMatched %c", cur);
 				ipInd++;
+
+			}
 			else{
-				printf("mismatch: %c", curIp);
+				printf("\n\nAborting, Mismatch: %c", curIp);
+				exit(0);
 			} 
 
 		}
+		//Non-terminal or Epsilon ( # ), get rule and push
 		else{
-
-			if(table[getRow(cur)][getCol(curIp)][0] != '-'){
+			
+			//Row and column indexes from the stack(cur) and current i/p character(curIp)
+			int row = getRow(cur);
+			int col = getCol(curIp);
+			
+			printf("\n\nRowVal:%d \tColVal:%d", row, col);
+			printf("\nRule: %c-->%s", table[row][0][0], table[row][col]);
+			
+			//Table entry found
+			if(table[row][col][0] != '-'){
 				
-				if(strlen(table[getRow(cur)][getCol(curIp)] > 1))
-					revPush(table[getRow(cur)][getCol(curIp)]);
-				else
-					push(table[getRow(cur)][getCol(curIp)][0]);			
+				if(strlen(table[row][col]) > 1)
+					revPush(table[row][col]);
+				else if(table[row][col][0] != '#')
+					push(table[row][col][0]);			
+				
+				printf("\n\nPush complete\n\n\n\n\n\n--------------------------------------------------");
+
 			}
+			//No entry in table
 			else{
 				printf("\n Table value is empty, Aborting.");
 				exit(0);
@@ -106,6 +133,7 @@ void main(){
 
 		}
 
+		
 		if(ip[ipInd] == '$'){
 			printf("\n String accepted");
 			exit(0);
