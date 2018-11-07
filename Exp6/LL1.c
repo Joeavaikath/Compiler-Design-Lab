@@ -98,6 +98,11 @@ void main(){
 				ipInd++;
 
 			}
+			else if(cur == 'i' && (curIp >= 'a' && curIp <= 'z')){
+				
+				printf("\n\nMatched %c", curIp);
+				ipInd++;
+			} 			
 			else{
 				printf("\n\nAborting, Mismatch: %c", curIp);
 				exit(0);
@@ -106,6 +111,9 @@ void main(){
 		}
 		//Non-terminal or Epsilon ( # ), get rule and push
 		else{
+
+			if(curIp>='a' && curIp<='z')
+				curIp = 'i';
 			
 			//Row and column indexes from the stack(cur) and current i/p character(curIp)
 			int row = getRow(cur);
