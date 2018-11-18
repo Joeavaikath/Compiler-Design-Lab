@@ -22,7 +22,7 @@ int m = 0;
   
 // Stores the production rules 
 char production[10][10] = {0};
-char f[10], first[10]; 
+char f[20], first[20]; 
 int k; 
 char ck; 
 int e; 

@@ -81,7 +81,9 @@ void main(){
 		
 		curIp = ip[ipInd];
 
-		printf("\n\nStack symbol:%c \n\nCurrent I/P Symbol:%c", cur, curIp);
+		printf("\n\nStack Symbol: %c \t Current I/P Symbol:%c", cur, curIp);
+
+		//printf("\n\nStack symbol:%c \n\nCurrent I/P Symbol:%c", cur, curIp);
 
 		//Terminal matching
 		if((cur >= 'a' && cur <= 'z') ||
@@ -94,12 +96,12 @@ void main(){
 
 			
 			if(cur == curIp){
-				printf("\n\nMatched %c", cur);
+				//printf("\n\nMatched %c", cur);
 				ipInd++;
 
 			}
 			else{
-				printf("\n\nAborting, Mismatch: %c", curIp);
+				//printf("\n\nAborting, Mismatch: %c", curIp);
 				exit(0);
 			} 
 
@@ -111,7 +113,7 @@ void main(){
 			int row = getRow(cur);
 			int col = getCol(curIp);
 			
-			printf("\n\nRowVal:%d \tColVal:%d", row, col);
+			//printf("\n\nRowVal:%d \tColVal:%d", row, col);
 			printf("\nRule: %c-->%s", table[row][0][0], table[row][col]);
 			
 			//Table entry found
@@ -122,7 +124,7 @@ void main(){
 				else if(table[row][col][0] != '#')
 					push(table[row][col][0]);			
 				
-				printf("\n\nPush complete\n\n\n\n\n\n--------------------------------------------------");
+				//printf("\n\nPush complete\n\n\n\n\n\n--------------------------------------------------");
 
 			}
 			//No entry in table
@@ -134,7 +136,7 @@ void main(){
 		}
 
 		
-		if(ip[ipInd] == '$'){
+		if(ip[ipInd] == '$' && stack[top] == '$'){
 			printf("\n String accepted");
 			exit(0);
 		}
