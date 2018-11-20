@@ -45,7 +45,7 @@ void main(){
 
 	//stack 1 for operands. stack 2 for operators. t for tenmperory variables
 	char stack1[10], stack2[10], t[10][10];
-	int top1, top2, choice, itr = 2, titr = 0, Ti = 0;
+	int top1, top2, choice, itr = 2, titr = 0, Ti = 90;
 	top1=top2=-1;
 
 	push(stack1, string[0], &top1);
@@ -69,11 +69,12 @@ void main(){
 
 				t[titr][2] = pop(stack1, &top1);
 				t[titr][0] = pop(stack1, &top1);
-				push(stack1, Ti++ + '0', &top1);
+				push(stack1, (char)Ti, &top1);
+				Ti = Ti-1; 
 				t[titr][1] = pop(stack2, &top2);
 				t[titr][3] = '\0';
 
-				printf("\n %c         %c    %c    %c", t[titr][1], t[titr][0], t[titr][2], Ti-1+'0');
+				printf("\n %c         %c    %c    %c", t[titr][1], t[titr][0], t[titr][2], (char)Ti+1);
 				titr++;
 				//printf("In popping");
 
@@ -93,9 +94,10 @@ void main(){
 
 
 	}
+	Ti = 90;
 	printf("\n\n\n t values: \n");
 	for(i=0;i<titr;i++)
-		printf("\nt%d   %s", i, t[i]);
+		printf("\n%c   %s", (char)Ti--, t[i]);
 
 
 
